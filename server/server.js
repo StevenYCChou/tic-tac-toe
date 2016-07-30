@@ -48,7 +48,7 @@ app.get('/games/:id/assign', function(req, res) {
 
   var userId = req.cookies.userId;
   if (userId < 0) {
-    res.status(400).send('Invalide user id!');
+    res.status(400).send('Invalid user id!');
   }
 
   if (userId === undefined) {
@@ -58,11 +58,11 @@ app.get('/games/:id/assign', function(req, res) {
   }
 
   if (!games[gameId].hasOwnProperty('x')) {
-    games[gameId].x = userId;
+    games[gameId].x = userId.toString();
   } else if (games[gameId].x === userId) {
     res.status(200).send('already assigned to game ' + gameId + '!');
   } else if (!games[gameId].hasOwnProperty('o')) {
-    games[gameId].o = userId;
+    games[gameId].o = userId.toString();
   } else if (games[gameId].o === userId) {
     res.status(200).send('already assigned to game ' + gameId + '!');
   } else {
@@ -82,6 +82,7 @@ app.post('/games/:id/move', function(req, res) {
   var isX = false;
 
   var userId = req.cookies.userId;
+  console.log(userId);
   if (games[gameId].hasOwnProperty('x') && games[gameId].x === userId) {
     isPlayer = true;
     isX = true;
@@ -92,21 +93,20 @@ app.post('/games/:id/move', function(req, res) {
   } 
 
   if (!isPlayer) {
-    res.status(400).send('Invalide user id!');
+    res.status(400).send('Invalid user id');
   }
 
-  var x = req.body.x;
-  var y = req.body.y;
+  var index = req.body.index;
 
-  if (x < 0 || x >= 3 || y < 0 || y >= 3) {
-    res.status(400).send('out of board');
+  if (index === undefined || index < 0 || index >= 9) {
+    res.status(400).send('invalide index');
   }
-  index = x + y*3;
 
   if (games[gameId].status[index] === 0) {
     games[gameId].status[index] = (isX) ? 1 : 2;
+    res.status(200).end();
   } else {
-    res.status(400).send('already has token');
+    res.status(406).send('the index already has symbol on it');
   }
 });
 
