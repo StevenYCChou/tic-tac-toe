@@ -4,6 +4,7 @@
 // PUT /games/:id/move
 
 var express = require('express'),
+    cors = require('cors'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser');
 // in memory values
@@ -12,6 +13,7 @@ var nUsers = 0;
 var games = [];
 
 var app = express();
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
