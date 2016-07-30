@@ -22,15 +22,16 @@ app.get('/games', function(req, res) {
 });
 
 app.post('/games', function(req, res) {
-  games.push({
+  var game = {
     id: nGames,
     status: [0, 0, 0,
              0, 0, 0,
              0, 0, 0],
     current_player: 1
-  });
+  };
+  games.push(game);
   nGames += 1;
-  res.status(200).end();
+  res.status(200).send(game);
 });
 
 app.get('/games/:id', function(req, res) {
