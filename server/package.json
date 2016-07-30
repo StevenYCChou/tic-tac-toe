@@ -2,6 +2,7 @@
   "name": "Tic Tac Toe Server",
   "version": "1.0.0",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0"
   }
 }
